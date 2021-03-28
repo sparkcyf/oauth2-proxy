@@ -1,3 +1,5 @@
+//just for sustech (modified from digitalocean)
+
 package providers
 
 import (
@@ -18,7 +20,7 @@ var _ Provider = (*DigitalOceanProvider)(nil)
 
 const (
 	digitalOceanProviderName = "DigitalOcean"
-	digitalOceanDefaultScope = "read"
+	digitalOceanDefaultScope = ""
 )
 
 var (
@@ -26,24 +28,24 @@ var (
 	// Pre-parsed URL of https://cloud.digitalocean.com/v1/oauth/authorize.
 	digitalOceanDefaultLoginURL = &url.URL{
 		Scheme: "https",
-		Host:   "cloud.digitalocean.com",
-		Path:   "/v1/oauth/authorize",
+		Host:   "cas.sustech.edu.cn",
+		Path:   "/cas/oauth2.0/authorize",
 	}
 
 	// Default Redeem URL for DigitalOcean.
 	// Pre-parsed URL of  https://cloud.digitalocean.com/v1/oauth/token.
 	digitalOceanDefaultRedeemURL = &url.URL{
 		Scheme: "https",
-		Host:   "cloud.digitalocean.com",
-		Path:   "/v1/oauth/token",
+		Host:   "cas.sustech.edu.cn",
+		Path:   "/cas/oauth2.0/accessToken",
 	}
 
 	// Default Profile URL for DigitalOcean.
 	// Pre-parsed URL of https://cloud.digitalocean.com/v2/account.
 	digitalOceanDefaultProfileURL = &url.URL{
 		Scheme: "https",
-		Host:   "api.digitalocean.com",
-		Path:   "/v2/account",
+		Host:   "cas.sustech.edu.cn",
+		Path:   "/cas/oauth2.0/profile",
 	}
 )
 
@@ -75,7 +77,7 @@ func (p *DigitalOceanProvider) GetEmailAddress(ctx context.Context, s *sessions.
 		return "", err
 	}
 
-	email, err := json.GetPath("account", "email").String()
+	email, err := json.GetPath("attributes", "email").String()
 	if err != nil {
 		return "", err
 	}
